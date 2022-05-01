@@ -1,6 +1,13 @@
 # QofL
 The purpose of the life of this plugin is to reduce the amount of typing while writing C++ scripts for Unreal Engine projects.
 
+## Instalation
+- Drop the source directory inside `your_unreal_project/Plugins/QofL/`
+- Add a `QofL` dependency in `your_unreal_project/Source/your_unreal_project/your_unreal_project.Build.cs` file, e.g.:
+```C#
+PrivateDependencyModuleNames.AddRange(new string[] { "HTTP", "Json", "JsonUtilities", "AIModule", "Niagara", "QofL" });
+```
+
 ## Logging
 
 ```C++
