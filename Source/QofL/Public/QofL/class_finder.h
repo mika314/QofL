@@ -15,4 +15,4 @@ auto classFinder(const TCHAR *assetPath)
   return it->second;
 }
 
-#define CLASS_FINDER(C, D, O) classFinder<U##C>(TEXT("/Game/" D "/" O))
+#define CLASS_FINDER(C, D, O) classFinder<C>(TEXT("/Game/" D "/" O))
