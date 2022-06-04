@@ -31,6 +31,13 @@ auto getProp(UObject *obj, const FName &propName)
     CHECK_RET(property, std::optional<double>{});
     return std::optional<double>{property->GetPropertyValue_InContainer(obj, 0)};
   }
+  else if constexpr (std::is_same_v<bool, T>)
+  {
+    CHECK_RET(genericProperty, std::optional<bool>{});
+    auto property = CastField<FBoolProperty>(genericProperty);
+    CHECK_RET(property, std::optional<bool>{});
+    return std::optional<bool>{property->GetPropertyValue_InContainer(obj, 0)};
+  }
 }
 
 template <typename T>
@@ -47,6 +54,8 @@ auto setProp(UObject *obj, const FName &propName, T value)
       return CastField<FFloatProperty>(genericProperty);
     else if constexpr (std::is_same_v<double, T>)
       return CastField<FDoubleProperty>(genericProperty);
+    else if constexpr (std::is_same_v<bool, T>)
+      return CastField<FBoolProperty>(genericProperty);
   }();
   if (!property)
   {
