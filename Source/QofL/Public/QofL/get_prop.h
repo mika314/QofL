@@ -4,6 +4,7 @@
 #include "check_ret.h"
 #include "log.h"
 #include <CoreMinimal.h>
+#include <optional>
 #include <type_traits>
 
 template <typename T>
