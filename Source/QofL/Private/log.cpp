@@ -16,6 +16,11 @@ namespace Internal
   {
     UE_LOG(LogTemp, Error, TEXT("%s"), ANSI_TO_TCHAR(value));
   }
+
+  auto dumpLogInfo(const char *value) -> void
+  {
+    UE_LOG(LogTemp, Display, TEXT("%s"), ANSI_TO_TCHAR(value));
+  }
 } // namespace Internal
 
 auto operator<<(std::ostream &strm, const FString &val) -> std::ostream &

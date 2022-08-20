@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright (c) 2022 Mika Pi
 
 using UnrealBuildTool;
 
@@ -38,6 +38,7 @@ public class QofL : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+            "UnrealEd",
 				// ... add private dependencies that you statically link with here ...
 			}
 			);
