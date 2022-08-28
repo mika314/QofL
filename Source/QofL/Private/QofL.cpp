@@ -85,6 +85,7 @@ auto FQofLModule::ConvertToInstancedStaticMesh(const TArray<AActor *> InActors) 
   root->RegisterComponent();
   // mark as static
   root->SetMobility(EComponentMobility::Static);
+  root->Rename(TEXT("root"));
   newActor->SetRootComponent(root);
   newActor->SetActorLocation(InActors[0]->GetActorLocation());
   newActor->SetActorRotation(InActors[0]->GetActorRotation());
@@ -186,6 +187,19 @@ auto FQofLModule::ConvertToInstancedStaticMesh(const TArray<AActor *> InActors) 
             for (auto i = 0; i < srcStaticMeshComp->GetNumMaterials(); ++i)
               comp->SetMaterial(i, srcStaticMeshComp->GetMaterial(i));
             comp->SetMobility(EComponentMobility::Static);
+            auto compName = [=]() {
+              auto mesh = srcStaticMeshComp->GetStaticMesh();
+              auto name = mesh->GetName();
+              if (comp->Rename(*name, nullptr, REN_Test))
+                return name;
+              for (auto i = 1;; ++i)
+              {
+                auto newName = name + "_" + FString::FromInt(i);
+                if (comp->Rename(*newName, nullptr, REN_Test))
+                  return newName;
+              }
+            }();
+            comp->Rename(*compName);
             comp->AttachToComponent(root, FAttachmentTransformRules::KeepWorldTransform);
             comps.insert(std::make_pair(key, comp));
             return comp;
