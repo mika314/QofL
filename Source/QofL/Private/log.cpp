@@ -9,23 +9,29 @@ namespace Internal
 {
   auto dumpLog(const char *value) -> void
   {
-    UE_LOG(LogTemp, Warning, TEXT("%s"), ANSI_TO_TCHAR(value));
+    UE_LOG(LogTemp, Warning, TEXT("%s"), UTF8_TO_TCHAR(value));
   }
 
   auto dumpLogErr(const char *value) -> void
   {
-    UE_LOG(LogTemp, Error, TEXT("%s"), ANSI_TO_TCHAR(value));
+    UE_LOG(LogTemp, Error, TEXT("%s"), UTF8_TO_TCHAR(value));
   }
 
   auto dumpLogInfo(const char *value) -> void
   {
-    UE_LOG(LogTemp, Display, TEXT("%s"), ANSI_TO_TCHAR(value));
+    UE_LOG(LogTemp, Display, TEXT("%s"), UTF8_TO_TCHAR(value));
   }
 } // namespace Internal
 
 auto operator<<(std::ostream &strm, const FString &val) -> std::ostream &
 {
   strm << TCHAR_TO_UTF8(*val);
+  return strm;
+}
+
+auto operator<<(std::ostream &strm, const FText &val) -> std::ostream &
+{
+  strm << TCHAR_TO_UTF8(*val.ToString());
   return strm;
 }
 
