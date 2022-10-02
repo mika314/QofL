@@ -38,11 +38,19 @@ public class QofL : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-            "UnrealEd",
 				// ... add private dependencies that you statically link with here ...
 			}
 			);
 
+		if (Target.bBuildEditor == true)
+		{
+			PrivateDependencyModuleNames.AddRange(
+				new string[]
+				{
+					"UnrealEd"
+				}
+			);
+		}
 
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
