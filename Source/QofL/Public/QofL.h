@@ -4,8 +4,10 @@
 
 #include <CoreMinimal.h>
 #include <Framework/MultiBox/MultiBoxBuilder.h>
-#include <LevelEditor.h>
 #include <Modules/ModuleManager.h>
+#if WITH_EDITOR
+#include <LevelEditor.h>
+#endif
 
 class FQofLModule final : public IModuleInterface
 {

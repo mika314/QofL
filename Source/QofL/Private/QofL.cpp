@@ -31,6 +31,7 @@ auto FQofLModule::GetMenuExtender(const TSharedRef<FUICommandList> CommandList,
 auto FQofLModule::StartupModule() -> void
 {
   LOG_INFO("Startup QofL module");
+#if WITH_EDITOR
   if (!IsRunningCommandlet())
   {
     FLevelEditorModule &LevelEditorModule =
@@ -40,6 +41,7 @@ auto FQofLModule::StartupModule() -> void
       menuExtenders.Add(FLevelEditorModule::FLevelViewportMenuExtender_SelectedActors::CreateRaw(
         this, &FQofLModule::GetMenuExtender));
   }
+#endif
   IModuleInterface::StartupModule();
 }
 
@@ -47,9 +49,11 @@ auto FQofLModule::ShutdownModule() -> void
 {
   IModuleInterface::ShutdownModule();
   LOG_INFO("Shutdown Ordy module");
+#if WITH_EDITOR
   FLevelEditorModule &LevelEditorModule =
     FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
   LevelEditorModule.GetAllLevelViewportContextMenuExtenders().RemoveAt(menuExtenderIdx);
+#endif
 }
 
 auto FQofLModule::MakeMenu(FMenuBuilder &MenuBuilder, const TArray<AActor *> InActors) -> void
