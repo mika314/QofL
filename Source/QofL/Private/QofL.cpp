@@ -72,6 +72,7 @@ auto FQofLModule::MakeMenu(FMenuBuilder &MenuBuilder, const TArray<AActor *> InA
 
 auto FQofLModule::ConvertToInstancedStaticMesh(const TArray<AActor *> InActors) -> void
 {
+#if WITH_EDITOR
   if (InActors.Num() == 0)
   {
     LOG_INFO("No actors selected");
@@ -228,10 +229,12 @@ auto FQofLModule::ConvertToInstancedStaticMesh(const TArray<AActor *> InActors) 
     }
   }
   newActor->SetActorLabel(maxName.c_str());
+#endif
 }
 
 auto FQofLModule::BreakdownInstancedStaticMesh(const TArray<AActor *> InActors) -> void
 {
+#if WITH_EDITOR
   if (InActors.Num() == 0)
   {
     LOG_INFO("No actors selected");
@@ -287,6 +290,7 @@ auto FQofLModule::BreakdownInstancedStaticMesh(const TArray<AActor *> InActors) 
     }
     srcActor->Destroy();
   }
+#endif
 }
 
 #undef LOCTEXT_NAMESPACE
