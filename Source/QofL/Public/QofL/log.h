@@ -9,6 +9,8 @@ auto QOFL_API operator<<(std::ostream &strm, const FString &) -> std::ostream &;
 auto QOFL_API operator<<(std::ostream &strm, const FText &) -> std::ostream &;
 auto QOFL_API operator<<(std::ostream &strm, const FVector &) -> std::ostream &;
 auto QOFL_API operator<<(std::ostream &strm, const FRotator &) -> std::ostream &;
+auto QOFL_API operator<<(std::ostream &strm, const TCHAR *) -> std::ostream &;
+auto QOFL_API operator<<(std::ostream &strm, const FName &) -> std::ostream &;
 
 namespace Internal
 {

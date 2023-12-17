@@ -46,3 +46,15 @@ auto operator<<(std::ostream &strm, const FRotator &val) -> std::ostream &
   strm << "(" << val.Pitch << ", " << val.Yaw << ", " << val.Roll << ")";
   return strm;
 }
+
+auto QOFL_API operator<<(std::ostream &strm, const TCHAR *v) -> std::ostream &
+{
+  strm << TCHAR_TO_UTF8(v);
+  return strm;
+}
+
+auto QOFL_API operator<<(std::ostream &strm, const FName &v) -> std::ostream &
+{
+  strm << TCHAR_TO_UTF8(*v.ToString());
+  return strm;
+}
