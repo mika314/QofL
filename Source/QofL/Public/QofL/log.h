@@ -5,12 +5,21 @@
 #include <Math/Vector.h>
 #include <sstream>
 
-auto QOFL_API operator<<(std::ostream &strm, const FString &) -> std::ostream &;
-auto QOFL_API operator<<(std::ostream &strm, const FText &) -> std::ostream &;
-auto QOFL_API operator<<(std::ostream &strm, const FVector &) -> std::ostream &;
-auto QOFL_API operator<<(std::ostream &strm, const FRotator &) -> std::ostream &;
-auto QOFL_API operator<<(std::ostream &strm, const TCHAR *) -> std::ostream &;
-auto QOFL_API operator<<(std::ostream &strm, const FName &) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const FString &) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const FText &) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const FVector &) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const FRotator &) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const TCHAR *) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const FName &) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const std::string &) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const char *) -> std::ostream &;
+auto QOFL_API toStrm(std::ostream &strm, const std::string_view &) -> std::ostream &;
+
+auto toStrm(std::ostream &strm, auto v) -> std::ostream &
+{
+  strm << std::move(v) << " ";
+  return strm;
+}
 
 namespace Internal
 {
@@ -21,7 +30,7 @@ namespace Internal
   void log(const char *fileName, int line, Args &&...args)
   {
     std::ostringstream strm;
-    ((strm << std::forward<Args>(args) << " "), ...);
+    (toStrm(strm, std::forward<Args>(args)), ...);
     strm << fileName << ":" << line;
     dumpLog(strm.str().c_str());
   }
@@ -29,7 +38,7 @@ namespace Internal
   void logErr(const char *fileName, int line, Args &&...args)
   {
     std::ostringstream strm;
-    ((strm << std::forward<Args>(args) << " "), ...);
+    (toStrm(strm, std::forward<Args>(args)), ...);
     strm << fileName << ":" << line;
     dumpLogErr(strm.str().c_str());
   }
@@ -38,7 +47,7 @@ namespace Internal
   void logInfo(const char *fileName, int line, Args &&...args)
   {
     std::ostringstream strm;
-    ((strm << std::forward<Args>(args) << " "), ...);
+    (toStrm(strm, std::forward<Args>(args)), ...);
     strm << fileName << ":" << line;
     dumpLogInfo(strm.str().c_str());
   }
@@ -47,7 +56,7 @@ namespace Internal
   void shortLog(Args &&...args)
   {
     std::ostringstream strm;
-    ((strm << std::forward<Args>(args) << " "), ...);
+    (toStrm(strm, std::forward<Args>(args)), ...);
     dumpLog(strm.str().c_str());
   }
 } // namespace Internal
