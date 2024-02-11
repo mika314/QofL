@@ -13,9 +13,17 @@ auto getProp(UObject *obj, const FName &propName)
   auto genericProperty = obj->GetClass()->FindPropertyByName(propName);
   if constexpr (std::is_base_of_v<UObject, T>)
   {
-    CHECK_RET(genericProperty, static_cast<T *>(nullptr));
+    if (!genericProperty)
+    {
+      LOG_ERR("genericProperty does not have a property obj:", UKismetSystemLibrary::GetDisplayName(obj), "property:", propName);
+      return static_cast<T *>(nullptr);
+    }
     auto property = CastField<FObjectProperty>(genericProperty);
-    CHECK_RET(property, static_cast<T *>(nullptr));
+    if (!property)
+    {
+      LOG_ERR("genericProperty not an object property obj:", UKismetSystemLibrary::GetDisplayName(obj), "property:", propName);
+      return static_cast<T *>(nullptr);
+    }
     return Cast<T>(property->GetPropertyValue_InContainer(obj, 0));
   }
   else if constexpr (std::is_same_v<float, T>)
